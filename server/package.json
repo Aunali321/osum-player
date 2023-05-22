@@ -21,6 +21,9 @@
 	"type": "module",
 	"homepage": "https://osumatrix.me",
 	"dependencies": {
+		"@distube/ytdl-core": "^4.11.8",
+		"@distube/ytpl": "^1.1.1",
+		"@distube/ytsr": "^1.1.9",
 		"@prisma/client": "^4.11.0",
 		"chokidar": "^3.5.3",
 		"cors": "^2.8.5",
@@ -29,8 +32,11 @@
 		"hound": "^1.0.5",
 		"imagemin": "^8.0.1",
 		"imagemin-webp": "^8.0.0",
+		"inquirer": "^9.1.5",
 		"music-metadata": "^8.1.3",
+		"node-fetch": "^3.3.1",
 		"parse-filepath": "^1.0.2",
+		"prompt-sync": "^4.2.0",
 		"sha1": "^1.1.1"
 	},
 	"devDependencies": {

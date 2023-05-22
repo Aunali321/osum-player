@@ -14,7 +14,7 @@ import {
 	addMarker,
 	findSongRandom,
 } from "./songs.services.js";
-import { getSong, getId, checkDemoMode } from "./middlewares.js";
+import { getSong, getId, checkDemoMode, searchYTSong, getYTPlaylist, getYTSong, downloadYTSong } from "./middlewares.js";
 
 const router = Router();
 
@@ -184,6 +184,49 @@ router.get("/changes", async (req, res, _next) => {
 	// WebSocket is probably the best way to do this.
 
 	res.end();
+});
+
+// POST to /api/v1/songs/search/youtube?query=X
+
+router.post("/search/youtube", async (req, res, next) => {
+	if (!req.query.query) return next(new Error("Invalid body"));
+
+	try {
+		const song = await searchYTSong(req.query.query);
+		console.log("song", song);
+		res.json(song);
+	  } catch (err) {
+		next(err);
+	  }
+});
+
+
+router.post("/search", async (req, res, next) => {
+	// if (!req.body.query) return next(new Error("Invalid body"));
+
+	const songs = await searchYTSong("eastside");
+	res.json(songs);
+});
+
+router.post("/download", async (req, res, next) => {
+	if (!req.body.id) return next(new Error("Invalid body"));
+
+	const song = await downloadYTSong(req.body.id);
+	res.json(song);
+});
+
+router.post("/playlist", async (req, res, next) => {
+	if (!req.body.id) return next(new Error("Invalid body"));
+
+	const songs = await getYTPlaylist(req.body.id);
+	res.json(songs);
+});
+
+router.post("/youtube", async (req, res, next) => {
+	if (!req.body.url) return next(new Error("Invalid body"));
+	
+	const song = await getYTSong(req.body.url);
+	res.json(song);
 });
 
 export default router;
